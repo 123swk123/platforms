@@ -33,6 +33,9 @@ ISL_VERSION=isl-0.16.1
 CLOOG_VERSION=cloog-0.18.1
 export PATH=$INSTALL_PATH/bin:$PATH
 
+mkdir -p src
+cd src
+
 # Download packages
 export http_proxy=$HTTP_PROXY https_proxy=$HTTP_PROXY ftp_proxy=$HTTP_PROXY
 wget -nc https://ftp.gnu.org/gnu/binutils/$BINUTILS_VERSION.tar.gz
@@ -52,6 +55,10 @@ wget -nc ftp://gcc.gnu.org/pub/gcc/infrastructure/$CLOOG_VERSION.tar.gz
 
 # Extract everything
 for f in *.tar*; do tar xfk $f; done
+
+# fix the automake version in isl
+cd `ls -1d isl*/`
+aclocal
 
 # Make symbolic links
 cd $GCC_VERSION
